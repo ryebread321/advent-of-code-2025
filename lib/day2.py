@@ -1,27 +1,3 @@
-"""
-NOTES:
-
-Definitions:
-
-- Product ID: positive integer
-- Product ID range: 'xxx-yyy' (closed interval)
-- Product ID ranges: comma-delimited list
-- Invalid product ID: a product ID comprised of digits that repeat twice
-    - Need a function that determines if a string is symmetric
-
-Algorithm:
-
-Input: list of product ID ranges
-Output: sum of invalid product IDs
-
-total = 0
-for each product ID range R:
-    for each product ID i in R:
-        if i is invalid:
-            total += i
-return total
-"""
-
 from typing import Iterable
 
 
