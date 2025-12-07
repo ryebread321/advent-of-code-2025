@@ -31,16 +31,16 @@ def parse_reducer(string: str) -> IntReducer:
             raise ValueError(f"Unknown symbol: '{string}'")
 
 
-def parse_rows(char_array: NDArray) -> Iterable[int]:
+def parse_rows(char_array: NDArray) -> Ints:
     return (int("".join(row)) for row in char_array)
 
 
-def parse_reversed_columns(char_array: NDArray) -> Iterable[int]:
+def parse_reversed_columns(char_array: NDArray) -> Ints:
     int_strings = ("".join(row) for row in np.rot90(char_array))
     return (int(s) for s in int_strings if not s.isspace())
 
 
-def parse_args(char_array: NDArray, strategy: ParsingStrategy) -> Iterable[int]:
+def parse_args(char_array: NDArray, strategy: ParsingStrategy) -> Ints:
     match (strategy):
         case ParsingStrategy.ROW:
             return parse_rows(char_array)
