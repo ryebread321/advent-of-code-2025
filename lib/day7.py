@@ -19,8 +19,7 @@ class MaxFlowGraph:
 def get_max_flow_graph(diagram: Iterable[str]) -> MaxFlowGraph:
     nodes = 0
     source = None
-    symbols = itertools.chain.from_iterable(diagram)
-    while (symbol := next(symbols, None)) is not None:
+    for symbol in itertools.chain.from_iterable(diagram):
         if symbol == START_SYMBOL:
             source = nodes
         nodes += 1
