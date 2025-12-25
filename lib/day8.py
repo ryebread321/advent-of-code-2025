@@ -1,7 +1,6 @@
 import copy
 import dataclasses
 import heapq
-import itertools
 from typing import Iterable
 
 import networkx as nx
@@ -31,20 +30,14 @@ def parse_positions(positions: Iterable[str]) -> list[NDArray]:
     return [parse_position(p) for p in positions]
 
 
-def build_distance_matrix(positions: list[NDArray]) -> dict[tuple, float]:
-    distances = {}
+def build_heap(positions: list[NDArray]) -> Heap:
+    heap = []
     for i, p_i in enumerate(positions):
         for j, p_j in enumerate(positions):
             if i < j:
-                distances[(i, j)] = np.linalg.norm(p_i - p_j)
-    return distances
-
-
-def build_heap(distances: dict[tuple, float]) -> Heap:
-    heap = []
-    for (i, j), distance in distances.items():
-        item = HeapItem(distance=distance, left=i, right=j)
-        heapq.heappush(heap, item)
+                distance = np.linalg.norm(p_i - p_j)
+                item = HeapItem(distance=distance, left=i, right=j)
+                heapq.heappush(heap, item)
     return heap
 
 
@@ -65,8 +58,7 @@ def compute_component_size_product(components: Iterable[set], k: int) -> int:
 def solve_part_1(filepath: str, n: int, k: int) -> int:
     with open(filepath) as f:
         positions = parse_positions(f)
-        distances = build_distance_matrix(positions)
-        heap = build_heap(distances)
+        heap = build_heap(positions)
         components = compute_components(heap, n)
         product = compute_component_size_product(components, k)
         return product
